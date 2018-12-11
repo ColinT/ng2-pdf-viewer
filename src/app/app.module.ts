@@ -8,6 +8,8 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PdfViewerModule } from './pdf-viewer/pdf-viewer.module';
+import { CustomPdfViewerModule } from './custom-pdf-viewer/custom-pdf-viewer.module';
+
 import { AppComponent } from './app.component';
 
 
@@ -25,7 +27,8 @@ import { AppComponent } from './app.component';
     MatSlideToggleModule,
     MatToolbarModule,
 
-    PdfViewerModule
+    PdfViewerModule,
+    CustomPdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 /**
  * Created by vadimdez on 21/06/16.
  */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { PDFProgressData, PDFDocumentProxy, PDFSource } from './pdf-viewer/pdf-viewer.module';
 
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
@@ -13,7 +13,7 @@ import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   pdfSrc: string | PDFSource | ArrayBuffer = './assets/pdf-test.pdf';
 
@@ -36,7 +36,7 @@ export class AppComponent {
   progressData: PDFProgressData;
   isLoaded = false;
   stickToPage = false;
-  showAll = true;
+  showAll = false;
   autoresize = true;
   fitToPage = false;
   outline: any[];
@@ -44,6 +44,12 @@ export class AppComponent {
   pdfQuery = '';
 
   @ViewChild(PdfViewerComponent) private pdfComponent: PdfViewerComponent;
+
+  ngOnInit() {
+    setInterval(() => {
+      this.page++;
+    }, 2000);
+  }
 
   // Load pdf
   loadPdf() {

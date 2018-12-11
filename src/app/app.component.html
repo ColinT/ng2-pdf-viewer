@@ -179,7 +179,7 @@
       </div>
 
 
-      <pdf-viewer [src]="pdfSrc"
+      <!-- <pdf-viewer [src]="pdfSrc"
                   [(page)]="page"
                   [rotation]="rotation"
                   [original-size]="originalSize"
@@ -194,7 +194,9 @@
                   (error)="onError($event)"
                   (on-progress)="onProgress($event)"
                   (page-rendered)="pageRendered($event)"
-      ></pdf-viewer>
+      ></pdf-viewer> -->
+
+      <custom-pdf-viewer [src]="pdfSrc" [pdfPageNumber]="page"></custom-pdf-viewer>
 
   </div>
 </main>
