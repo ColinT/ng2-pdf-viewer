@@ -316,6 +316,7 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
           stickToPage = !this._stickToPage;
         }
 
+        console.log(scale);
         currentViewer._setScale(scale, stickToPage);
       });
   }
@@ -532,5 +533,6 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
       this.pdfSinglePageViewer.setDocument(this._pdf);
       this.pdfSinglePageLinkService.setDocument(this._pdf, null);
     }
+
   }
 }
