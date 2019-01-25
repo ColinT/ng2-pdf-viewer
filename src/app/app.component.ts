@@ -54,7 +54,7 @@ export class AppComponent {
     xhr.responseType = 'blob';
 
     xhr.onload = (e: any) => {
-      console.log(xhr);
+      // console.log(xhr);
       if (xhr.status === 200) {
         const blob = new Blob([xhr.response], { type: 'application/pdf' });
         this.pdfSrc = URL.createObjectURL(blob);
@@ -161,7 +161,7 @@ export class AppComponent {
    * @param {PDFProgressData} progressData
    */
   onProgress(progressData: PDFProgressData) {
-    console.log(progressData);
+    // console.log(progressData);
     this.progressData = progressData;
     this.isLoaded = false;
     this.error = null; // clear error
@@ -194,7 +194,7 @@ export class AppComponent {
    * @param {CustomEvent} e
    */
   pageRendered(e: CustomEvent) {
-    console.log('(page-rendered)', e);
+    // console.log('(page-rendered)', e);
   }
 
   searchQueryChanged(newQuery: string) {

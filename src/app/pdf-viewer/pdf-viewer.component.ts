@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   OnInit,
   HostListener,
+  ViewChild,
   OnDestroy
 } from '@angular/core';
 import {
@@ -47,7 +48,7 @@ export enum RenderTextMode {
 @Component({
   selector: 'pdf-viewer',
   template: `
-    <div class="ng2-pdf-viewer-container"><div class="pdfViewer"></div></div>
+    <div #viewerContainer class="ng2-pdf-viewer-container"><div class="pdfViewer"></div></div>
   `,
   styleUrls: ['./pdf-viewer.component.scss']
 })
@@ -174,6 +175,8 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
   set fitToPage(value: boolean) {
     this._fitToPage = Boolean(value);
   }
+
+  @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   static getLinkTarget(type: string) {
     switch (type) {
@@ -329,6 +332,10 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     eventBus.on('pagerendered', e => {
       this.pageRendered.emit(e);
+    });
+
+    eventBus.on('pagechange', e => {
+      this.pageChange.emit(e.pageNumber);
     });
 
     this.pdfMultiPageLinkService = new PDFJSViewer.PDFLinkService({ eventBus });
@@ -500,7 +507,7 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   private getScale(viewportWidth: number) {
-    const offsetWidth = this.element.nativeElement.offsetWidth;
+    const offsetWidth = this.viewerContainer.nativeElement.clientWidth;
 
     if (offsetWidth === 0) {
       return 1;
