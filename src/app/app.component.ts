@@ -1,7 +1,8 @@
 /**
  * Created by vadimdez on 21/06/16.
  */
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import {
   PDFProgressData,
   PDFDocumentProxy,
@@ -46,6 +47,13 @@ export class AppComponent {
   pdfQuery = '';
 
   @ViewChild(PdfViewerComponent) private pdfComponent: PdfViewerComponent;
+
+  constructor(@Inject(DOCUMENT) public document: Document) {
+    window.onscroll = (_ev) => {
+      const newEvent = new UIEvent('scroll');
+      document.body.dispatchEvent(newEvent);
+    };
+  }
 
   // Load pdf
   loadPdf() {

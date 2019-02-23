@@ -78,6 +78,7 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
   private _canAutoResize = true;
   private _fitToPage = false;
   private _externalLinkTarget = 'blank';
+  private _container: HTMLElement;
   private lastLoaded: string | Uint8Array | PDFSource;
 
   private resizeTimeout: NodeJS.Timer;
@@ -173,6 +174,10 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
   @Input('fit-to-page')
   set fitToPage(value: boolean) {
     this._fitToPage = Boolean(value);
+  }
+
+  @Input() set container(value: HTMLElement) {
+    this._container = value;
   }
 
   static getLinkTarget(type: string) {
@@ -331,6 +336,10 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
       this.pageRendered.emit(e);
     });
 
+    eventBus.on('pagechange', e => {
+      console.log('pagechange', e);
+    });
+
     this.pdfMultiPageLinkService = new PDFJSViewer.PDFLinkService({ eventBus });
     this.pdfMultiPageFindController = new PDFJSViewer.PDFFindController({
       linkService: this.pdfMultiPageLinkService,
@@ -339,7 +348,8 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     const pdfOptions: PDFViewerParams | any = {
       eventBus: eventBus,
-      container: this.element.nativeElement.querySelector('div'),
+      container: this._container || this.element.nativeElement.querySelector('div'),
+      viewer: this.element.nativeElement.querySelector('div').firstElementChild,
       removePageBorders: true,
       linkService: this.pdfMultiPageLinkService,
       textLayerMode: this._renderText
@@ -374,7 +384,7 @@ export class PdfViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     const pdfOptions: PDFViewerParams | any = {
       eventBus: eventBus,
-      container: this.element.nativeElement.querySelector('div'),
+      container: this.container || this.element.nativeElement.querySelector('div'),
       removePageBorders: true,
       linkService: this.pdfSinglePageLinkService,
       textLayerMode: this._renderText
